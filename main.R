@@ -1,0 +1,13 @@
+library(tidyverse)
+library(nycflights13)
+mtcars <- read_csv("mtcars.csv")
+
+mtcars_subset <- filter(mtcars,mpg<30)
+mtcars_subset <- mutate(mtcars_subset,mpg_wt=mpg*wt)
+mtcars_subset <- select(mtcars_subset,mpg,wt,mpg_wt,cyl)
+mtcars_subset <- group_by(mtcars_subset, cyl)
+mtcars_subset <- summarize(mtcars_subset, avg_mpg=mean(mpg))
+mtcars_subset <- arrange(mtcars_subset, desc(avg_mpg))
+glimpse(mtcars_subset)
+summary(mtcars_subset)
+write_csv(mtcars_subset, "mtcars_subset.csv")
